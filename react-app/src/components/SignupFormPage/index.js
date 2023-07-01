@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, NavLink } from "react-router-dom";
+import { useHistory } from "react-router";
 import { signUp } from "../../store/session";
 import './SignupForm.css';
 import logo from './splitsmart-logo.png';
 
 function SignupFormPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,6 +26,8 @@ function SignupFormPage() {
       const data = await dispatch(signUp(name.split(" ")[0], name.split(" ")[1], email, phoneNumber, imgURL, password));
       if (data) {
         setErrors(data)
+      } else {
+        history.push('/dashboard');
       }
     } else {
       setErrors(['Confirm Password field must be the same as the Password field']);
