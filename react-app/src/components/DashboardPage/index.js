@@ -24,7 +24,7 @@ function DashboardPage() {
   return (
     <div className="container main-wrapper">
       <LeftNavigationBar />
-
+{/* // NEED TO UPDATE */}
       <main className="main">
         <MainHeader />
         <section className="subheader">
