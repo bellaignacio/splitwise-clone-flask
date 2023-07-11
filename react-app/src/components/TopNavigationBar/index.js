@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./TopNavigation.css";
 
-function TopNavigationBar({ isLoaded }) {
+function TopNavigationBar() {
   const sessionUser = useSelector((state) => state.session.user);
   const headerLogin = sessionUser ? "header-login" : "";
   const titleLogin = sessionUser ? "title-login" : "";
@@ -27,11 +27,9 @@ function TopNavigationBar({ isLoaded }) {
                 <h1 className={`title ${titleLogin}`}>SplitSmart</h1>
               </NavLink>
             </li>
-            {isLoaded && (
               <li>
                 <ProfileButton user={sessionUser} />
               </li>
-            )}
           </ul>
         </nav>
       </div>

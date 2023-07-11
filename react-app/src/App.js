@@ -9,7 +9,7 @@ import AllExpensesPage from "./components/AllExpensesPage";
 import EditFriendPage from "./components/EditFriendPage";
 import FriendPage from "./components/FriendPage";
 import { authenticate } from "./store/session";
-import TopNavigationBar from "./components/TopNavigationBar";
+// import TopNavigationBar from "./components/TopNavigationBar";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ function App() {
 
   return (
     <>
-      <TopNavigationBar isLoaded={isLoaded} />
+      {/* <TopNavigationBar isLoaded={isLoaded} /> */}
       {isLoaded && (
         <Switch>
           <Route exact path="/">

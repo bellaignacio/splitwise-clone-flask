@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { useHistory } from "react-router";
 import './LoginForm.css';
+import TopNavigationBar from "../TopNavigationBar";
 
 
 function LoginFormPage() {
@@ -27,35 +28,39 @@ function LoginFormPage() {
   };
 
   return (
-    <div className="login-form-container">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h1>Log in</h1>
-        {errors.length > 0 && <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>}
-        <label>Email address</label>
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button className="primary" type="submit">Log in</button>
-        <button onClick={(e) => {
-          setEmail('demo@aa.io');
-          setPassword('password');
-        }}>Log In as Demo User</button>
-      </form>
-    </div>
+    <>
+      <TopNavigationBar />
+      <div className="login-form-container">
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h1>Log in</h1>
+          {errors.length > 0 && <ul>
+            {errors.map((error, idx) => (
+              <li key={idx}>{error}</li>
+            ))}
+          </ul>}
+          <label>Email address</label>
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <label>Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button className="primary" type="submit">Log in</button>
+          <button onClick={(e) => {
+            setEmail('demo@aa.io');
+            setPassword('password');
+          }}>Log In as Demo User</button>
+        </form>
+      </div>
+    </>
+
   );
 }
 

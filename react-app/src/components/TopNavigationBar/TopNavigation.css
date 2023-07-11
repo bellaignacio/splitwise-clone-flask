@@ -18,24 +18,24 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     padding: 0;
     width: 133px;
 }
-  
+
 .hidden {
     display: none;
 }
-   
+
 .header-login {
     background-color:rgb(66, 202, 164);
 }
-  
+
 .header {
-    height: 33px;
+    height: 35px;
     width: 100%;
     box-sizing: border-box;
     position: fixed;
     top: 0;
     padding: 0;
 }
-  
+
 .header img {
     height: 24px;
     width: 24px;
@@ -51,7 +51,7 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     display: flex;
     align-items: center;
 }
-  
+
 .title {
     font-size: 16px;
     text-transform: uppercase;
@@ -59,11 +59,11 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     margin-left: 15px;
     color: #000;
 }
-  
+
 .title-login {
     color: #fff;
 }
-  
+
 .navigation {
     display: flex;
     justify-content: space-between;
@@ -71,34 +71,34 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     margin: 0;
     height: 33px;
 }
-  
+
 .navigation-menu {
     display: flex;
     gap:10px;
     position: relative;
 }
-  
+
 .nav-login {
     color: rgb(66, 202, 164);
 }
-  
+
 .nav-signup {
     color: #fff;
     background-color: rgb(66, 202, 164);
     border-radius: 4px;
 }
-  
+
 .navigation-link {
     font-size: 15px;
     padding: 7px 9px;
 }
-  
+
 .nav-btn {
     height: 33px;
     border: none;
     margin: 0;
     padding: 5px;
-    background-color: rgb(66, 202, 164); 
+    background-color: rgb(66, 202, 164);
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -109,21 +109,21 @@ p, ul, div, li, a, img h1, h2, h3, h4, section {
     color: #fff;
     margin-left: 5px;
 }
-  
+
 .nav-btn:hover {
     background-color: rgb(60, 188, 152) !important;
 }
-  
+
 ul {
-    list-style: none; 
+    list-style: none;
 }
-  
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 10px;
 }
-  
+
 a {
     text-decoration: none;
 }
@@ -132,7 +132,7 @@ a {
     font-size: 14px;
     padding: 3px 15px;
 }
-  
+
 .log-out {
     padding: 10px 0;
     border: none;
@@ -140,7 +140,7 @@ a {
     text-align: left;
     display: inline-block;
 }
-  
+
 .logout-wrapper:hover .log-out {
     background-color: #1CC29F;
     color: #fff;

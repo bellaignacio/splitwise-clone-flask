@@ -4,8 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getSummary } from "../../store/expense";
 import { fetchFriendships } from "../../store/friend";
+import TopNavigationBar from "../TopNavigationBar";
 import MainHeader from "../MainHeader";
 import "./DashboardPage.css";
+
 function DashboardPage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
@@ -22,11 +24,12 @@ function DashboardPage() {
   if (!sessionUser) return <Redirect to="/" />;
 
   return (
-    <div className="container main-wrapper">
+    <>
       <LeftNavigationBar />
-{/* // NEED TO UPDATE */}
+      <TopNavigationBar />
+      {/* <MainHeader /> */}
       <main className="main">
-        <MainHeader />
+
         <section className="subheader">
           <ul className="subheader-list">
             <li>
@@ -106,7 +109,7 @@ function DashboardPage() {
           </div>
         </section>
       </main>
-    </div>
+    </>
   );
 }
 
