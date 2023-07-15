@@ -19,7 +19,7 @@ const removeComment=(id)=>({
 })
 
 
-const getComments=(comments)=>({
+export const getComments=(comments)=>({
     type: GET_COMMENTS,
     payload: comments
 })
@@ -127,7 +127,7 @@ export default function reducer(state=initialState, action){
     switch(action.type){
         case GET_COMMENTS:
 
-            const data= action.payload.comments.reduce((acc,curr)=>{
+            const data= action.payload.reduce((acc,curr)=>{
                 acc[curr.id]=curr
                 return acc
             },{})

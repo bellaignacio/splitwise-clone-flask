@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./ExpenseDetailsSection.css";
-import  * as expenseActions from "../../store/expense";
+import * as expenseActions from "../../store/expense";
 import {
   addComment,
   deleteComment,
-  // getCommentsByExpenseId,
+  getComments,
   updateComment,
 } from "../../store/comment";
-import OpenModalButton from '../OpenModalButton';
-import AddEditExpenseModal from '../AddEditExpenseModal';
+import OpenModalButton from "../OpenModalButton";
+import AddEditExpenseModal from "../AddEditExpenseModal";
 
 const month = [
   "January",
@@ -36,21 +36,30 @@ function ExpenseDetailsSection({ expenseId }) {
   const [error, setError] = useState({});
   const [isEdit, setEdit] = useState(false);
   const [commentId, setCommentId] = useState(null);
-  // const expense = useSelector((state) => state.expense?.currentExpense);
-  const createdExpenses = useSelector((state) => Object.values(state.expense.createdExpenses));
+  const createdExpenses = useSelector((state) =>
+    Object.values(state.expense.createdExpenses)
+  );
   const unsettledExpenses = useSelector((state) => {
-    return Object.values(state.expense.unsettledExpenses).map(participant => participant.expense);
+    return Object.values(state.expense.unsettledExpenses).map(
+      (participant) => participant.expense
+    );
   });
   const settledExpenses = useSelector((state) => {
-    return Object.values(state.expense.settledExpenses).map(participant => participant.expense);
+    return Object.values(state.expense.settledExpenses).map(
+      (participant) => participant.expense
+    );
   });
-  // const comments = useSelector((state) => Object.values(state.comment?.comments));
+  const comments = useSelector((state) =>
+    Object.values(state.comment?.comments)
+  );
 
-
-  const allExpenses = [...createdExpenses, ...unsettledExpenses, ...settledExpenses];
-  const expense = allExpenses.filter(expense => expense.id === expenseId)[0];
-  const comments = expense.comments;
-
+  const allExpenses = [
+    ...createdExpenses,
+    ...unsettledExpenses,
+    ...settledExpenses,
+  ];
+  const expense = allExpenses.filter((expense) => expense.id === expenseId)[0];
+  const userId = useSelector((state) => state.session?.user?.id);
 
   //useEffects
   useEffect(() => {
@@ -64,9 +73,6 @@ function ExpenseDetailsSection({ expenseId }) {
 
   useEffect(() => {
     const error = {};
-    if (comment.length < 1) {
-      error.message = "comment has to be at least 1 character";
-    }
     if (comment.length > 255) {
       error.message = "comment has to be less than 255 characters";
     }
@@ -76,15 +82,16 @@ function ExpenseDetailsSection({ expenseId }) {
 
   useEffect(() => {
     const error = {};
-    if (commentEdit.length < 1) {
-      error.message = "comment has to be at least 1 character";
-    }
     if (commentEdit.length > 255) {
       error.message = "comment has to be less than 255 characters";
     }
 
     setErrorEdit(error);
   }, [commentEdit]);
+
+  useEffect(() => {
+    dispatch(getComments(expense.comments));
+  }, [dispatch, expense.comments]);
 
   //handlers
   const handleCommentCreate = (e) => {
@@ -111,16 +118,16 @@ function ExpenseDetailsSection({ expenseId }) {
   const handleEditCancel = () => {
     setEdit(false);
     setCommentId(null);
-    setCommentEdit("")
+    setCommentEdit("");
   };
 
-  const handleEditComment = (e)=>{
+  const handleEditComment = (e) => {
     e.preventDefault();
     dispatch(updateComment(commentEdit, commentId));
     setCommentEdit("");
-    setCommentId(null)
-    setEdit(false)
-  }
+    setCommentId(null);
+    setEdit(false);
+  };
 
   //utils
   const date = new Date(expense?.created_at);
@@ -139,7 +146,10 @@ function ExpenseDetailsSection({ expenseId }) {
   };
 
   return (
-    <div id={`expense-details-${expenseId}`} className="expense-comments-wrapper hidden">
+    <div
+      id={`expense-details-${expenseId}`}
+      className="expense-comments-wrapper hidden"
+    >
       <section className="expense-subheader">
         <div className="expense-image-wrapper">
           <img
@@ -164,10 +174,13 @@ function ExpenseDetailsSection({ expenseId }) {
           >
             Edit expense
           </button> */}
-          <OpenModalButton modalComponent={<AddEditExpenseModal />} buttonText={'Edit expense'} />
+          <OpenModalButton
+            modalComponent={<AddEditExpenseModal />}
+            buttonText={"Edit expense"}
+          />
         </div>
       </section>
-      <hr style={{width:"95%"}} />
+      <hr style={{ width: "95%" }} />
 
       <main className="expense-main">
         <section className="expense-main-content">
@@ -177,8 +190,8 @@ function ExpenseDetailsSection({ expenseId }) {
               alt={expense?.user?.short_name}
             />
             <p>
-              {expense?.user?.short_name} paid{" "}
-              {formatMoney(expense?.amount)} and owes{" "}
+              {expense?.user?.short_name} paid {formatMoney(expense?.amount)}{" "}
+              and owes{" "}
               {formatMoney(
                 expense?.amount / (expense?.participants?.length + 1)
               )}
@@ -223,12 +236,15 @@ function ExpenseDetailsSection({ expenseId }) {
                     >
                       <label>
                         <textarea
+                          required
                           onChange={(e) => setCommentEdit(e.target.value)}
                           placeholder="Add comment"
                           value={commentEdit}
                         ></textarea>
                         {errorEdit.message && (
-                          <span className="expense-error">{errorEdit.message}</span>
+                          <span className="expense-error">
+                            {errorEdit.message}
+                          </span>
                         )}
                       </label>
                       <div className="expense-button-wrapper">
@@ -269,24 +285,26 @@ function ExpenseDetailsSection({ expenseId }) {
                         </span>
                       )}
                     </p>
-                    <div className="expense-icon-wrapper">
-                      <span
-                        onClick={() =>
-                          handleCommentEdit(comment.id, comment.comment)
-                        }
-                      >
-                        <img
-                          src="https://res.cloudinary.com/dr1ekjmf4/image/upload/v1688651618/icons8-pencil-50_1_cg3jui.png"
-                          alt="edit icon"
-                        />
-                      </span>
-                      <span
-                        className="expense-close"
-                        onClick={() => handleDelete(comment.id)}
-                      >
-                        X
-                      </span>
-                    </div>
+                    {userId === comment.user.id && (
+                      <div className="expense-icon-wrapper">
+                        <span
+                          onClick={() =>
+                            handleCommentEdit(comment.id, comment.comment)
+                          }
+                        >
+                          <img
+                            src="https://res.cloudinary.com/dr1ekjmf4/image/upload/v1688651618/icons8-pencil-50_1_cg3jui.png"
+                            alt="edit icon"
+                          />
+                        </span>
+                        <span
+                          className="expense-close"
+                          onClick={() => handleDelete(comment.id)}
+                        >
+                          X
+                        </span>
+                      </div>
+                    )}
                     <p className="expense-comment-text">{comment?.comment}</p>
                   </>
                 )}
@@ -296,6 +314,7 @@ function ExpenseDetailsSection({ expenseId }) {
           <form className="expense-comment-form" onSubmit={handleCommentCreate}>
             <label>
               <textarea
+                required
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="Add comment"
                 value={comment}
